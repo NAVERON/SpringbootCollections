@@ -43,10 +43,15 @@
             	</exclusion>
             </exclusions>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webflux</artifactId>
+            <!-- web 框架 对比 sevlet 3, 需要运行在容器中 如netty或ubdetow-->
+        </dependency>
         <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-undertow -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-undertow</artifactId>
+            <artifactId>spring-boot-starter-undertow</artifactId>  <!-- web 服务器 -->
         </dependency>
 
         <dependency>
