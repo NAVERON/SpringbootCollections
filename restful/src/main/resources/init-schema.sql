@@ -1,5 +1,5 @@
 
-drop table users;
+-- drop table users;
 
 create table users (
     id int not null generated always as identity, 
