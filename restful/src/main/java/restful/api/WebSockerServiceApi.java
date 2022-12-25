@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * https://spring.io/guides/gs/messaging-stomp-websocket/  
+ * <a href="https://spring.io/guides/gs/messaging-stomp-websocket/">spring websocket doc </a>
  * 使用长连接的应用 
  * @author wangy
  *
