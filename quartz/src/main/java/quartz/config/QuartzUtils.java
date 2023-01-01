@@ -37,7 +37,7 @@ import quartz.jobs.HelloJob;
 
 
 @Service 
-public class QuartzUtils {
+public class QuartzUtils {  // 或者 QuartzService
 
     private static final Logger LOGGER = LoggerFactory.getLogger(QuartzUtils.class);
     private final Scheduler scheduler;  // quartz 自动装配的bean实现 
