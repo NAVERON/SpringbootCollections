@@ -18,7 +18,6 @@ public class SecuritySpringApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        // TODO Auto-generated method stub
         LOGGER.info("程序运行");
     }
     
