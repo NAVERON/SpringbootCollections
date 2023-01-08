@@ -16,7 +16,7 @@ public class SimpleAPI {
 
     private static final Logger log = LoggerFactory.getLogger(SimpleAPI.class);
 
-    @RequiresRoles(value = "xxx")
+    @RequiresRoles(value = "admin")
     @GetMapping(path = "")
     public ResponseEntity<String> home() {
         return ResponseEntity.ok().build();
