@@ -1,7 +1,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    
-    
+
     <parent>
         <groupId>org.evs</groupId>
         <artifactId>springseries</artifactId>
@@ -10,9 +9,15 @@
     
     <artifactId>security</artifactId>
     <name>Spring Security Framework</name>
-    
-    
+
     <dependencies>
+        <!-- 公共工具项目 -->
+        <dependency>
+            <groupId>org.evs</groupId>
+            <artifactId>common</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
         <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security -->
 <!--        <dependency>-->
 <!--            <groupId>org.springframework.boot</groupId>-->
@@ -40,19 +45,12 @@
             <!--<scope>test</scope>-->
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/com.auth0/java-jwt -->
-        <dependency>
-            <groupId>com.auth0</groupId>
-            <artifactId>java-jwt</artifactId>
-            <version>4.2.1</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-api -->
-        <dependency>
-            <groupId>io.jsonwebtoken</groupId>
-            <artifactId>jjwt-api</artifactId>
-            <version>0.11.5</version>
-        </dependency>
-
 
     </dependencies>
+
+
 </project>
+
+
+
+

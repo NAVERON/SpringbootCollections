@@ -70,15 +70,6 @@ public class ShiroConfig {
         return chainDefinition;
     }
 
-    // shiro spring AOP 整合 特殊设置 ？ -- 需要验证和了解
-    @Bean
-    public DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator() {
-        DefaultAdvisorAutoProxyCreator creator = new DefaultAdvisorAutoProxyCreator();
-        creator.setProxyTargetClass(true);
-
-        return creator;
-    }
-
 }
 
 

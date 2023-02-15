@@ -9,6 +9,10 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+
+/**
+ * 自定义 认证和授权 过程
+ */
 public class ShiroCustomeRealm extends AuthorizingRealm {
 
     private static final Logger log = LoggerFactory.getLogger(ShiroCustomeRealm.class);
