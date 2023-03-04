@@ -27,13 +27,14 @@ import java.util.zip.GZIPOutputStream;
 
 /**
  * gson json utility https://github.com/oktolab/gson-utils
+ * 一般3种思路  静态方法; 单例模式; Bean注入
  */
 public class GsonUtils {
 
     private static final Logger log = LoggerFactory.getLogger(GsonUtils.class);
 
     private static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ssZ";
-    private static Gson gson;
+    private static volatile Gson gson;
 
     // 经典双重锁校验  单例模式
     public static Gson getGson() {

@@ -3,19 +3,12 @@ package common.utils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.boot.web.client.RestTemplateCustomizer;
-import org.springframework.http.HttpRequest;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.client.ClientHttpRequestExecution;
-import org.springframework.http.client.ClientHttpRequestInterceptor;
-import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.io.IOException;
 import java.util.Map;
 
 
@@ -27,7 +20,7 @@ public class SpringHttpClientUtils {
 
     private static final Logger log = LoggerFactory.getLogger(SpringHttpClientUtils.class);
 
-    private RestTemplate client;
+    private final RestTemplate client;
 
     /**
      * 定制化restTemplate 比如日志拦截
@@ -48,6 +41,8 @@ public class SpringHttpClientUtils {
             });
 
             // 设置 httpFactory 为jdk 自带http client
+            // restTemplate.setRequestFactory();
+            // https://gist.github.com/kasimok/04878482b9e7bc49a83ad5acfc74234e
 
         }
 
@@ -82,16 +77,18 @@ public class SpringHttpClientUtils {
      * @return
      */
     // 通用get 请求
-    public String doGet(String url) {
+    public ResponseEntity<String> doGet(String url) {
         ResponseEntity<String> response = this.client.getForEntity(url, String.class);
 
-        return "";
+        return response;
     }
 
     // 通用post请求
-    public String doPost(String url, Object obj, Map<String, String> params) {
+    public ResponseEntity<String> doPost(String url, Object obj, Map<String, String> params) {
 
-        return "";
+        ResponseEntity<String> response = this.client.postForEntity(url, obj, String.class);
+
+        return response;
     }
 
 }

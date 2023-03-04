@@ -19,7 +19,7 @@ public class JDKHttpClientUtils {
 
     private static final Logger log = LoggerFactory.getLogger(JDKHttpClientUtils.class);
 
-    private static HttpClient client = null;
+    private static volatile HttpClient client = null;
 
     // 单例模式
     public static HttpClient getDefaultHttpClient() {
