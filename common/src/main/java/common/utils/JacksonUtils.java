@@ -3,8 +3,10 @@ package common.utils;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.json.JsonReadFeature;
 import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.json.JsonMapper;
@@ -30,7 +32,7 @@ public class JacksonUtils {
 
     private static final Logger log = LoggerFactory.getLogger(JacksonUtils.class);
 
-    private static ObjectMapper mapper;
+    private static volatile ObjectMapper mapper;
 
     private static final Set<JsonReadFeature> JSON_READ_FEATURES_ENABLED = Sets.newHashSet(
             //允许在JSON中使用Java注释
@@ -51,13 +53,15 @@ public class JacksonUtils {
             JsonReadFeature.ALLOW_TRAILING_COMMA
     );
 
-    static {
+    public static ObjectMapper getJacksonMapper() {
         try {
             //初始化
             mapper = initMapper();
         } catch (Exception e) {
             log.error("jackson config error", e);
         }
+
+        return mapper;
     }
 
     public static ObjectMapper initMapper() {
@@ -98,10 +102,38 @@ public class JacksonUtils {
         return objectMapper;
     }
 
-    public static ObjectMapper getObjectMapper() {
-        return mapper;
+
+    /**
+     * 根据路径 获取json  某个节点的值
+     * @param json 原始json字符串
+     * @param path 路径, 使用 . 分割层级
+     * @throws JsonProcessingException json解析异常
+     */
+    public static JsonNode getJsonNodeByPath(String json, String path) throws JsonProcessingException {
+        String[] paths = path.split(",");
+        JsonNode treeNodes = mapper.readTree(json);
+
+        for(String levelPath : paths) {
+            treeNodes = treeNodes.path(levelPath);
+            if (treeNodes.isMissingNode()){
+                // 没有当前节点
+                break;
+            }
+        }
+
+        return treeNodes;
     }
 
+    public static <T> T getJsonStringByPath(String json, String path, Class<T> clazz) throws JsonProcessingException {
+        JsonNode node = JacksonUtils.getJsonNodeByPath(json, path);
+
+        assert node != null;
+        if(node.isMissingNode()){
+            return null;
+        }
+
+        return mapper.treeToValue(node, clazz);
+    }
 
 
 }

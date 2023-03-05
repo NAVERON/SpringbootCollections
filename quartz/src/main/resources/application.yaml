@@ -1,0 +1,42 @@
+
+
+logging:
+  level:
+    web: INFO
+server:
+  port: 8888
+  shutdown: graceful
+
+spring:
+  # database
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      connection-timeout: 5000
+      idle-timeout: 10000
+      max-lifetime: 60000
+    password: wangyulong
+    url: jdbc:postgresql://113.31.119.92:5432/collections
+    username: open
+  jpa:
+    database: postgresql
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+  # Quartz configuration
+  quartz:
+    jdbc:
+      initialize-schema: always
+    job-store-type: jdbc
+    properties:
+      org:
+        quartz:
+          jobStore:
+            driverDelegateClass: org.quartz.impl.jdbcjobstore.PostgreSQLDelegate
+            isClustered: true
+          scheduler:
+            instanceId: AUTO
+
+
+
