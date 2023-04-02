@@ -10,4 +10,8 @@ public class OAuth2ServiceApplication {
         SpringApplicationBuilder builder = new SpringApplicationBuilder(OAuth2ServiceApplication.class);
         builder.build().run(args);
     }
+
 }
+
+
+

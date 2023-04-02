@@ -29,14 +29,14 @@ spring:
     jdbc:
       initialize-schema: always
     job-store-type: jdbc
-    properties:
-      org:
-        quartz:
-          jobStore:
-            driverDelegateClass: org.quartz.impl.jdbcjobstore.PostgreSQLDelegate
-            isClustered: true
-          scheduler:
-            instanceId: AUTO
+#    properties:
+#      org:
+#        quartz:
+#          jobStore:
+#            driverDelegateClass: org.quartz.impl.jdbcjobstore.PostgreSQLDelegate
+#            isClustered: true
+#          scheduler:
+#            instanceId: AUTO
 
 
 

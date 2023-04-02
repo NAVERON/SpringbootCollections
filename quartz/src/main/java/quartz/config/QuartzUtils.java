@@ -87,7 +87,7 @@ public class QuartzUtils {  // 或者 QuartzService
             this.scheduler.scheduleJob(jobDetail, trigger);
         } catch (SchedulerException e) {
             e.printStackTrace();
-            LOGGER.error("schedule 错误 --> {}", e);
+            LOGGER.error("schedule 错误 --> " + e);
         }
     }
     
@@ -202,17 +202,17 @@ public class QuartzUtils {  // 或者 QuartzService
         }
     }
     
-    public List<Map<String, Object>> queryAllJobs(){
+    public List<Map<String, Object>> queryAllJobs() {
         List<Map<String, Object>> allJobs = new ArrayList<>();
         
         try {
-            Set<JobKey> jobKeys = this.scheduler.getJobKeys(GroupMatcher.anyJobGroup());
-            jobKeys.stream().forEach(jobKey -> {
+            Set<JobKey> jobKeys = this.scheduler.getJobKeys(GroupMatcher.anyJobGroup());  // job 可以分组, 获取某一个组的 jobs
+            jobKeys.forEach(jobKey -> {
                 Map<String, Object> infos = new HashMap<>();
                 infos.put("JobKey", jobKey.toString());
                 try {
                     List<? extends Trigger> triggers = this.scheduler.getTriggersOfJob(jobKey);
-                    triggers.stream().forEach(trigger -> {
+                    triggers.forEach(trigger -> {
                         infos.put("TriggerKey", trigger.toString());
                         try {
                             TriggerState triggerState = this.scheduler.getTriggerState(trigger.getKey());
@@ -234,12 +234,12 @@ public class QuartzUtils {  // 或者 QuartzService
         return allJobs;
     }
     
-    public List<Map<String, Object>> queryRunningJobs(){
+    public List<Map<String, Object>> queryRunningJobs() {
         List<Map<String, Object>> runningJobs = new ArrayList<>();
         
         try {
             List<JobExecutionContext> executions = this.scheduler.getCurrentlyExecutingJobs();
-            executions.stream().forEach(execution -> {
+            executions.forEach(execution -> {
                 Map<String, Object> infos = new HashMap<>();
                 JobDetail jobDetail = execution.getJobDetail();
                 Trigger trigger = execution.getTrigger();
