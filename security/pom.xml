@@ -37,6 +37,7 @@
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
         <!-- https://mvnrepository.com/artifact/com.h2database/h2 -->
+        <!-- 一般测试中使用内存数据库, 所以生命周期 scope 一般会加上test  -->
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>

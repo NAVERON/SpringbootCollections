@@ -18,7 +18,7 @@ public class SecuritySpringApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        LOGGER.info("程序运行");
+        LOGGER.info("programming running ...");
     }
     
     

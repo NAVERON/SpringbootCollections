@@ -1,0 +1,27 @@
+
+# 加载过程文档 : https://juejin.cn/post/7054818269621911559
+
+logging:
+  level:
+    web: INFO
+
+spring:
+  application:
+    name: ShiroDemoApplication
+  datasource:
+    # jdbc:h2:file:/db/security.db
+    url: jdbc:h2:mem:security.db
+    driver-class-name: org.h2.Driver
+    username: eron
+    password: eron
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+  h2:
+    console:
+      enabled: true
+
+
+
+
+
+

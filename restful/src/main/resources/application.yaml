@@ -1,0 +1,24 @@
+
+
+logging:
+  level:
+    web: INFO
+
+spring:
+  datasource:
+    url: jdbc:derby:memory:collections_restful.db;create=true
+    driver-class-name: org.apache.derby.jdbc.EmbeddedDriver
+    username: admin
+    password: admin
+
+  sql:
+    init:
+      schema-locations:
+        - classpath:init-schema.sql
+      data-locations:
+        - classpath:init-data.sql
+      # derby 设置memory 内存中不会保存文件, 默认为file 所以会重复创建数据表
+      # 内存中设置 always  file设置为never, 创建一次即可
+      mode: always
+
+

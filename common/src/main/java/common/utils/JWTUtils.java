@@ -5,11 +5,15 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTCreator;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.auth0.jwt.interfaces.Verification;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -29,45 +33,58 @@ public class JWTUtils {
     private static final String PRIVATE_SECRET = "";  // 加密密钥
     private static final Long EXPIRE_TIME = 30 * 60 * 1000L;  // ms --> 30 min
 
-    // 创建jwt
+    /**
+     * create token
+     * @param infos
+     * @return
+     */
     public String createJWTToken(Map<String, String> infos) {
         Algorithm algorithm = Algorithm.HMAC256(JWTUtils.PRIVATE_SECRET);
         Date date = new Date(System.currentTimeMillis() + JWTUtils.EXPIRE_TIME);
 
         JWTCreator.Builder builder = JWT.create();
         infos.forEach(builder::withClaim);
-        builder.withExpiresAt(date);
+
+        // other sign
+        ZonedDateTime current = Instant.now().atZone(ZoneId.systemDefault());
+        builder.withIssuedAt(current.toInstant())
+                .withExpiresAt(current.plusSeconds(JWTUtils.EXPIRE_TIME).toInstant())
+                .withIssuer(JWTUtils.ISSUER)
+                .withAudience(JWTUtils.AUDIENCE);
 
         return builder.sign(algorithm);
-
     }
 
-    // 验证
-    public void validateOIDCToken(String idToken, Map<String, String> infos) {
+    /**
+     * verify token
+     * if validate --> parse jwt and get claims
+     * else throw Exception
+     * @param idToken token
+     */
+    public Map<String, Object> validateOIDCToken(String idToken) {
 
-        // 判断 issuer audience 是否正确
         Algorithm algorithm = Algorithm.HMAC256(JWTUtils.PRIVATE_SECRET);
 
         Verification builder = JWT.require(algorithm);
-        infos.forEach(builder::withClaim);
-        JWTVerifier verifier = builder.build();
+        JWTVerifier verifier = builder
+                .withIssuer(JWTUtils.ISSUER)
+                .withAudience(JWTUtils.AUDIENCE)
+                .acceptLeeway(10)
+                .build();
 
         // 校验 token
-        DecodedJWT jwt = verifier.verify(idToken);
-        return ;
+        try {
+            DecodedJWT jwt = verifier.verify(idToken);
+            log.info("jwt verify ok ------>");
+            log.info("jwt claims --> \n{}", jwt.getClaims());
+
+            Map<String, Object> result = new HashMap<>(jwt.getClaims());
+            return result;
+        } catch (JWTVerificationException e) {
+            log.error(e.getMessage());
+            throw new JWTVerificationException(e.getMessage());
+        }
     }
-
-    // 解析 claims
-    public void parseToken(String idToken) {
-        DecodedJWT jwt = JWT.decode(idToken);
-        Map<String, String> infos = new HashMap<>();
-        jwt.getClaims().entrySet().forEach(claim -> {
-            infos.put(claim.getKey(), claim.getValue().asString());
-        });
-
-        log.info("claims ==> {}", infos);
-    }
-
 
 }
 
