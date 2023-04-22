@@ -14,7 +14,7 @@ public class BirthDayServiceImpl implements BirthDayService {
 
     private static final Logger log = LoggerFactory.getLogger(BirthDayServiceImpl.class);
 
-    private static DateTimeFormatter LOCALDATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    private static final DateTimeFormatter LOCALDATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     /**
      * @param rawBirthday  raw birthday
@@ -29,7 +29,7 @@ public class BirthDayServiceImpl implements BirthDayService {
     }
 
     /**
-     * @param birthday brithday
+     * @param birthday birthday
      * @return chinese zodiac
      */
     @Override

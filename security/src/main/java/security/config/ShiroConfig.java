@@ -13,21 +13,21 @@ import org.springframework.context.annotation.Configuration;
 
 
 /**
- * doc : https://shiro.apache.org/spring-boot.html
- * smaple : https://github.com/apache/shiro/tree/main/samples/spring-boot-web
- * shiro architecture : https://shiro.apache.org/architecture.html
+ * doc : <a href="https://shiro.apache.org/spring-boot.html">apache shiro doc</a>
+ * smaple : <a href="https://github.com/apache/shiro/tree/main/samples/spring-boot-web">shiro sample</a>
+ * shiro architecture : <a href="https://shiro.apache.org/architecture.html">shiro arch</a>
  */
 @Configuration
 public class ShiroConfig {
 
     private static final Logger log = LoggerFactory.getLogger(ShiroConfig.class);
 
-    @Bean
-    public Realm customeRealm() {
-        return new ShiroCustomeRealm();
+    @Bean(name = "CustomRealm")
+    public Realm customRealm() {
+        return new ShiroCustomRealm();
     }
 
-    @Bean
+//    @Bean(name = "SecurityManager")
     public DefaultWebSecurityManager securityManager(Realm customeRealm) {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         securityManager.setRealm(customeRealm);
@@ -45,10 +45,11 @@ public class ShiroConfig {
         return securityManager;
     }
 
-    @Bean
+    @Bean(name = "ShiroFilterChainDefinition")
     public ShiroFilterChainDefinition shiroFilterChainDefinition() {
         DefaultShiroFilterChainDefinition chainDefinition = new DefaultShiroFilterChainDefinition();
 
+        // 不同的 路径前缀 使用不同的角色/权限限制
         // login url 登陆api 可以不认证
         chainDefinition.addPathDefinition("/home/login", "anon");
 

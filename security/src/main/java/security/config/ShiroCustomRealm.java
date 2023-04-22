@@ -13,9 +13,9 @@ import org.slf4j.LoggerFactory;
 /**
  * 自定义 认证和授权 过程
  */
-public class ShiroCustomeRealm extends AuthorizingRealm {
+public class ShiroCustomRealm extends AuthorizingRealm {
 
-    private static final Logger log = LoggerFactory.getLogger(ShiroCustomeRealm.class);
+    private static final Logger log = LoggerFactory.getLogger(ShiroCustomRealm.class);
 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
