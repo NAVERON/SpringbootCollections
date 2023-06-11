@@ -28,6 +28,7 @@ public class JWTUtils {
 
     private static final String ISSUER = "https://your-issuer.com";
     private static final String AUDIENCE = "you-client-id";
+    private static final String SUBJECT = "test";
     private static final String JWK_URL = "";  // 获取公钥的地址
 
     private static final String PRIVATE_SECRET = "";  // 加密密钥
@@ -50,7 +51,8 @@ public class JWTUtils {
         builder.withIssuedAt(current.toInstant())
                 .withExpiresAt(current.plusSeconds(JWTUtils.EXPIRE_TIME).toInstant())
                 .withIssuer(JWTUtils.ISSUER)
-                .withAudience(JWTUtils.AUDIENCE);
+                .withAudience(JWTUtils.AUDIENCE)
+                .withSubject(JWTUtils.SUBJECT);
 
         return builder.sign(algorithm);
     }
@@ -65,13 +67,9 @@ public class JWTUtils {
 
         Algorithm algorithm = Algorithm.HMAC256(JWTUtils.PRIVATE_SECRET);
 
-        Verification builder = JWT.require(algorithm);
-        JWTVerifier verifier = this.createJwtValidation()
-            builder
-                .withIssuer(JWTUtils.ISSUER)
-                .withAudience(JWTUtils.AUDIENCE)
-                .acceptLeeway(10)
-                .build();
+        JWTVerifier verifier = JWTUtils.createJwtValidation(
+            algorithm, JWTUtils.ISSUER, JWTUtils.AUDIENCE, JWTUtils.SUBJECT
+        );
 
         // 校验 token
         try {
