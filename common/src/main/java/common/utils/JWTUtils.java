@@ -35,10 +35,10 @@ public class JWTUtils {
 
     /**
      * create token
-     * @param infos
-     * @return
+     * @param infos information
+     * @return token
      */
-    public String createJWTToken(Map<String, String> infos) {
+    public static String createJWTToken(Map<String, String> infos) {
         Algorithm algorithm = Algorithm.HMAC256(JWTUtils.PRIVATE_SECRET);
         Date date = new Date(System.currentTimeMillis() + JWTUtils.EXPIRE_TIME);
 
@@ -61,12 +61,13 @@ public class JWTUtils {
      * else throw Exception
      * @param idToken token
      */
-    public Map<String, Object> validateOIDCToken(String idToken) {
+    public static Map<String, Object> validateOIDCToken(String idToken) {
 
         Algorithm algorithm = Algorithm.HMAC256(JWTUtils.PRIVATE_SECRET);
 
         Verification builder = JWT.require(algorithm);
-        JWTVerifier verifier = builder
+        JWTVerifier verifier = this.createJwtValidation()
+            builder
                 .withIssuer(JWTUtils.ISSUER)
                 .withAudience(JWTUtils.AUDIENCE)
                 .acceptLeeway(10)
@@ -84,6 +85,16 @@ public class JWTUtils {
             log.error(e.getMessage());
             throw new JWTVerificationException(e.getMessage());
         }
+    }
+
+    private static JWTVerifier createJwtValidation(
+        Algorithm algorithm, String issuer, String audience, String subject) {
+        Verification builder = JWT.require(algorithm);
+        builder.withIssuer(issuer);
+        builder.withAudience(audience);
+        builder.withSubject(subject);
+
+        return builder.build();
     }
 
 }
