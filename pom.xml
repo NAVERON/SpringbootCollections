@@ -17,7 +17,6 @@
     
     <modules>
     	<module>restful</module>
-    	<module>oauth2</module>
     	<module>security</module>
     	<module>quartz</module>
     	<module>common</module>

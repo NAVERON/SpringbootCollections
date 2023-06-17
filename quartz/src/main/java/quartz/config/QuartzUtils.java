@@ -1,5 +1,17 @@
 package quartz.config;
 
+import org.quartz.*;
+import org.quartz.DateBuilder.IntervalUnit;
+import org.quartz.Trigger.TriggerState;
+import org.quartz.impl.matchers.GroupMatcher;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.scheduling.quartz.QuartzJobBean;
+import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
+import quartz.jobs.HelloJob;
+
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -7,32 +19,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
-
-import javax.annotation.PostConstruct;
-
-import org.quartz.DateBuilder;
-import org.quartz.DateBuilder.IntervalUnit;
-import org.quartz.JobBuilder;
-import org.quartz.JobDataMap;
-import org.quartz.JobDetail;
-import org.quartz.JobExecutionContext;
-import org.quartz.JobKey;
-import org.quartz.Scheduler;
-import org.quartz.SchedulerException;
-import org.quartz.SimpleScheduleBuilder;
-import org.quartz.SimpleTrigger;
-import org.quartz.Trigger;
-import org.quartz.Trigger.TriggerState;
-import org.quartz.TriggerBuilder;
-import org.quartz.TriggerKey;
-import org.quartz.impl.matchers.GroupMatcher;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.scheduling.quartz.QuartzJobBean;
-import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
-
-import quartz.jobs.HelloJob;
 
 
 
@@ -118,7 +104,7 @@ public class QuartzUtils {  // 或者 QuartzService
                 .usingJobData(new JobDataMap(jobData))  // job data map 不能为 null 
                 .build();
         
-        Long jobTimesInMilli = timeUnit.toMillis(jobTime);  // 转换成毫秒 
+        long jobTimesInMilli = timeUnit.toMillis(jobTime);  // 转换成毫秒
         Trigger trigger = TriggerBuilder.newTrigger()
                 .withIdentity(new TriggerKey(jobName, jobGroup))
                 .withSchedule(

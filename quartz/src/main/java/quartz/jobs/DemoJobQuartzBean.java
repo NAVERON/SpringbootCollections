@@ -1,13 +1,12 @@
 package quartz.jobs;
 
-import java.util.concurrent.atomic.AtomicInteger;
-
-import org.quartz.DisallowConcurrentExecution;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.quartz.QuartzJobBean;
+
+import java.util.concurrent.atomic.AtomicInteger;
 
 
 /**

@@ -85,8 +85,7 @@ public class JWTUtils {
         }
     }
 
-    private static JWTVerifier createJwtValidation(
-        Algorithm algorithm, String issuer, String audience, String subject) {
+    private static JWTVerifier createJwtValidation(Algorithm algorithm, String issuer, String audience, String subject) {
         Verification builder = JWT.require(algorithm);
         builder.withIssuer(issuer);
         builder.withAudience(audience);
