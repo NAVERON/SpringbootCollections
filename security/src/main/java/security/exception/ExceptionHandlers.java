@@ -1,5 +1,6 @@
 package security.exception;
 
+import org.evs.models.BusinessException;
 import org.evs.models.CommonResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,8 +19,8 @@ public class ExceptionHandlers {
         return ResponseEntity.of(null);
     }
 
-    @ExceptionHandler(value = SecurityBusinessException.class)
-    public ResponseEntity<CommonResponse> businessExceptionHandler(SecurityBusinessException exception) {
+    @ExceptionHandler(value = BusinessException.class)
+    public ResponseEntity<CommonResponse> businessExceptionHandler(BusinessException exception) {
 
         return ResponseEntity.ok(null);
     }

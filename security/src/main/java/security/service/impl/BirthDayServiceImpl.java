@@ -1,9 +1,9 @@
 package security.service.impl;
 
+import org.evs.models.BusinessException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import security.exception.SecurityBusinessException;
 import security.service.BirthDayService;
 
 import java.time.LocalDate;
@@ -23,7 +23,7 @@ public class BirthDayServiceImpl implements BirthDayService {
     @Override
     public LocalDate validBirthday(String rawBirthday) {
         if(rawBirthday == null) {
-            throw new SecurityBusinessException("RAW BIRTHDAY IS NULL");
+            throw new BusinessException("RAW BIRTHDAY IS NULL");
         }
         return LocalDate.parse(rawBirthday, LOCALDATE_FORMATTER);
     }

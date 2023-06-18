@@ -27,7 +27,7 @@ public class ShiroConfig {
         return new ShiroCustomRealm();
     }
 
-//    @Bean(name = "SecurityManager")
+    @Bean(name = "SecurityManager")
     public DefaultWebSecurityManager securityManager(Realm customeRealm) {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         securityManager.setRealm(customeRealm);
@@ -51,7 +51,7 @@ public class ShiroConfig {
 
         // 不同的 路径前缀 使用不同的角色/权限限制
         // login url 登陆api 可以不认证
-        chainDefinition.addPathDefinition("/home/login", "anon");
+        chainDefinition.addPathDefinition("/**", "anon");
 
         // logged in users with the 'document:read' permission
 //        chainDefinition.addPathDefinition("/docs/**", "authc, perms[document:read]");
@@ -59,7 +59,7 @@ public class ShiroConfig {
 //        chainDefinition.addPathDefinition("/**", "authc");
 
         // 都需要登陆
-        chainDefinition.addPathDefinition("/**", "authc");
+//        chainDefinition.addPathDefinition("/**", "authc");
 
         return chainDefinition;
     }

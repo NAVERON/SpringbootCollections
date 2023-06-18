@@ -1,5 +1,7 @@
 package security.model;
 
+import org.evs.utils.GsonUtils;
+
 import java.util.Map;
 
 public class User {
@@ -34,7 +36,10 @@ public class User {
         this.password = password;
     }
 
-
+    @Override
+    public String toString() {
+        return GsonUtils.toJsonString(this);
+    }
 }
 
 
