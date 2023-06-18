@@ -11,11 +11,10 @@
     <name>Spring Security Framework</name>
 
     <dependencies>
-        <!-- 公共工具项目 -->
         <dependency>
             <groupId>org.evs</groupId>
-            <artifactId>common</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <artifactId>base</artifactId>
+            <version>0.1-RELEASE</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security -->

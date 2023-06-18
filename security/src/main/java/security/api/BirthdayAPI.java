@@ -1,6 +1,6 @@
 package security.api;
 
-import common.models.CommonResponse;
+import org.evs.models.CommonResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.repository.query.Param;
@@ -24,18 +24,18 @@ public class BirthdayAPI {
     }
 
     @GetMapping(path = "valid")
-    public ResponseEntity<CommonResponse<Object>> validBirthday(@Param(value = "date") String date) {
+    public ResponseEntity<CommonResponse> validBirthday(@Param(value = "date") String date) {
         LocalDate localDate = this.birthDayService.validBirthday(date);
 
-        return ResponseEntity.ok(CommonResponse.success(localDate));
+        return ResponseEntity.ok(CommonResponse.buildSuccess(localDate));
     }
 
     @GetMapping(path = "chinese-zodiac")
-    public ResponseEntity<CommonResponse<Object>> getChineseZodiac(@Param(value = "date") String date) {
+    public ResponseEntity<CommonResponse> getChineseZodiac(@Param(value = "date") String date) {
         LocalDate localDate = this.birthDayService.validBirthday(date);
         String chineseZodiac = this.birthDayService.getChineseZodiac(localDate);
 
-        return ResponseEntity.ok(CommonResponse.success(chineseZodiac));
+        return ResponseEntity.ok(CommonResponse.buildSuccess(chineseZodiac));
     }
 
 }

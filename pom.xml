@@ -19,9 +19,9 @@
     	<module>restful</module>
     	<module>security</module>
     	<module>quartz</module>
-    	<module>common</module>
     	<module>mqcom</module>
     	<module>grpc</module>
+        <module>base</module>
     </modules>
     
     <properties>

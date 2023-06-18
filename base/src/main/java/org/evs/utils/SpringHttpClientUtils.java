@@ -1,23 +1,21 @@
-package common.utils;
+package org.evs.utils;
 
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.boot.web.client.RestTemplateCustomizer;
-import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 
 /**
  * 配置 spring restTemplate http客户端 请求
  */
-@Component
 public class SpringHttpClientUtils {
 
     private static final Logger log = LoggerFactory.getLogger(SpringHttpClientUtils.class);
 
-    private final RestTemplate client;
+    private SpringHttpClientUtils(){} // prevent instance
 
     /**
      * 定制化restTemplate 比如日志拦截
@@ -44,9 +42,10 @@ public class SpringHttpClientUtils {
         }
     }
 
-    public SpringHttpClientUtils() {
+    public static RestTemplate buildRestClient() {
         RestTemplateBuilder builder = new RestTemplateBuilder(new OuterRestTemplateCustomizer());
-        client = builder.build();
+
+        return builder.build();
     }
 
 }

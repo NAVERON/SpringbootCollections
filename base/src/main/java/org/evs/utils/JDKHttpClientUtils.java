@@ -1,4 +1,4 @@
-package common.utils;
+package org.evs.utils;
 
 
 import org.slf4j.Logger;
@@ -13,7 +13,7 @@ import java.util.concurrent.CompletableFuture;
 
 /**
  * JDK 自带 http 工具实现
- * https://medium.com/@ashokmathankumar/basic-authentication-with-java-11-httpclient-e129bb749fd3
+ * <a href="https://medium.com/@ashokmathankumar/basic-authentication-with-java-11-httpclient-e129bb749fd3">java 11 http client</a>
  */
 public class JDKHttpClientUtils {
 

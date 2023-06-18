@@ -1,4 +1,4 @@
-package common.utils;
+package org.evs.utils;
 
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
@@ -26,18 +26,18 @@ import java.util.zip.GZIPOutputStream;
 
 
 /**
- * gson json utility https://github.com/oktolab/gson-utils
+ * gson json utility <a href="https://github.com/oktolab/gson-utils">gson utils on GITHUB</a>
  * 一般3种思路  静态方法; 单例模式; Bean注入
  */
 public class GsonUtils {
 
     private static final Logger log = LoggerFactory.getLogger(GsonUtils.class);
 
-    private static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ssZ";
+    private static final String DATE_FORMAT = "yyyy-MM-dd' 'HH:mm:ss";
     private static volatile Gson gson;
 
     // 经典双重锁校验  单例模式
-    public static Gson getGson() {
+    private static Gson getGson() {
         if (gson == null) {
             synchronized (GsonUtils.class) {
                 if (gson == null) {
@@ -59,26 +59,25 @@ public class GsonUtils {
 
     // 只是简单的转换
     public static String toJsonString(Object obj) {
-        String result = getGson().toJson(obj);
 
-        return result;
+        return GsonUtils.getGson().toJson(obj);
     }
-    public static <T> T fromJsonString(String originJson, Class<T> classOfT) {
-        T objT = getGson().fromJson(originJson, classOfT);
 
-        return objT;
+    public static <T> T fromJsonString(String originJson, Class<T> classOfT) {
+
+        return GsonUtils.getGson().fromJson(originJson, classOfT);
     }
 
     public static boolean isValidJson(String content) {
         Object parsedValue = null;
         try {
-            parsedValue = getGson().fromJson(content, JsonObject.class);
+            parsedValue = GsonUtils.getGson().fromJson(content, JsonObject.class);
         } catch (Exception e) {
             try {
-                parsedValue = getGson().fromJson(content, new TypeToken<List<JsonObject>>(){}.getType());
+                parsedValue = GsonUtils.getGson().fromJson(content, new TypeToken<List<JsonObject>>(){}.getType());
             } catch (Exception e2) {
                 try {
-                    parsedValue = getGson().fromJson(content, new TypeToken<List<JsonPrimitive>>(){}.getType());
+                    parsedValue = GsonUtils.getGson().fromJson(content, new TypeToken<List<JsonPrimitive>>(){}.getType());
                 } catch (Exception e3) {
                     return false;
                 }
@@ -88,18 +87,18 @@ public class GsonUtils {
     }
 
     public static String toJsonGZIP(Object value) throws Exception {
-        String jsonStr = getGson().toJson(value);
-        return compress(jsonStr);
+        String jsonStr = GsonUtils.getGson().toJson(value);
+        return GsonUtils.compress(jsonStr);
     }
 
     public static <T> T fromJsonGZIP(String json, Class<T> classOfT) throws Exception {
         String decompressedJson = decompress(json);
-        return getGson().fromJson(decompressedJson, classOfT);
+        return GsonUtils.getGson().fromJson(decompressedJson, classOfT);
     }
 
     public static <T> T fromJsonGZIP(String json, Type typeOfT) throws Exception {
-        String decompressedJson = decompress(json);
-        return getGson().fromJson(decompressedJson, typeOfT);
+        String decompressedJson = GsonUtils.decompress(json);
+        return GsonUtils.getGson().fromJson(decompressedJson, typeOfT);
     }
 
     // 对字符串进行压缩
@@ -111,22 +110,23 @@ public class GsonUtils {
         GZIPOutputStream gzip = new GZIPOutputStream(obj);
         gzip.write(str.getBytes(StandardCharsets.ISO_8859_1));
         gzip.close();
-        return obj.toString(StandardCharsets.ISO_8859_1.name());
+        return obj.toString(StandardCharsets.ISO_8859_1);
     }
 
     private static String decompress(String json) throws Exception {
         byte[] bytes = json.getBytes(StandardCharsets.ISO_8859_1);
-        if (bytes == null || bytes.length == 0) {
+        if (bytes.length == 0) {
             return "{}";
         }
         GZIPInputStream gis = new GZIPInputStream(new ByteArrayInputStream(bytes));
         BufferedReader bf = new BufferedReader(new InputStreamReader(gis, StandardCharsets.ISO_8859_1));
-        String outStr = "";
+        StringBuilder outStr = new StringBuilder();
         String line;
         while ((line = bf.readLine()) != null) {
-            outStr += line;
+            outStr.append(line);
         }
-        return outStr;
+
+        return outStr.toString();
     }
 
     /**

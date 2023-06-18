@@ -1,5 +1,8 @@
 package security.exception;
 
+/**
+ * 项目中单独定义 异常覆盖实现
+ */
 public class SecurityBusinessException extends RuntimeException {
 
     private String exceptionCode = "security.0000";  // business error code

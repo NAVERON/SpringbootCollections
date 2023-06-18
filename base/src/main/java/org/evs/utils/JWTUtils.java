@@ -1,4 +1,4 @@
-package common.utils;
+package org.evs.utils;
 
 
 import com.auth0.jwt.JWT;
